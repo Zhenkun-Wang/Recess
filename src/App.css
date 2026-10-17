@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+/* Recess 主题令牌（Tailwind v4 @theme）。 */
+@theme {
+  --color-brand: #6366f1;
+  --color-brand-soft: #818cf8;
+  --color-focus: #22d3ee;
+  --color-rest: #34d399;
+  --color-surface: #16181d;
+  --color-surface-2: #1e2129;
+}
+
+:root {
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background:
+    radial-gradient(1200px 600px at 50% -10%, rgba(99, 102, 241, 0.18), transparent 60%),
+    #0b0c10;
+  /* 渐变固定相对视口定位且不平铺：防止内容超过一屏时按视口高度重复铺贴，
+     在磁贴接缝处出现"背景分成两段"的色差。 */
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  color: #e5e7eb;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* toast 提醒窗口：背景透明，无边框窗口只露出卡片本体。 */
+body.toast-body {
+  background: transparent;
+}
+
+/* 数字等宽，避免倒计时跳动。 */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}

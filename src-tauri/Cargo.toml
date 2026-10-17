@@ -1,0 +1,55 @@
+[package]
+name = "recess"
+version = "0.1.0-alpha"
+description = "Recess - 基于 Rust/Tauri v2 的轻量屏幕时间监督桌面应用（绿色便携）"
+authors = ["Recess Team"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+# The `_lib` suffix may seem redundant but it is necessary
+# to make the lib name unique and wouldn't conflict with the bin name.
+# This seems to be only an issue on Windows, see https://github.com/rust-lang/cargo/issues/8519
+name = "recess_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+# ---- Tauri v2 核心（tray-icon 用于后续系统托盘）----
+tauri = { version = "2", features = ["tray-icon"] }
+tauri-plugin-opener = "2"
+
+# ---- 开机自启（opt-in：默认不启用，由前端设置开关控制）----
+tauri-plugin-autostart = "2"
+
+# ---- 日志后端（写入程序目录下 logs/，绿色便携）----
+tauri-plugin-log = "2"
+
+# ---- 序列化 ----
+serde = { version = "1", features = ["derive"] }
+
+# ---- 异步运行时（后台定时器/异步写入）----
+tokio = { version = "1", features = ["full"] }
+
+# ---- 本地数据库（bundled: 静态编译 SQLite，无需系统预装）----
+rusqlite = { version = "0.32", features = ["bundled"] }
+
+# ---- 时间处理 ----
+chrono = { version = "0.4", features = ["serde"] }
+
+# ---- 日志 ----
+log = "0.4"
+
+# ---- Windows Win32 API 绑定（系统空闲/前台窗口）----
+[target.'cfg(windows)'.dependencies]
+windows = { version = "0.58", features = [
+    "Win32_Foundation",
+    "Win32_UI_WindowsAndMessaging",
+    "Win32_UI_Input_KeyboardAndMouse",
+    "Win32_System_Threading",
+    "Win32_System_SystemInformation",
+] }
+
